@@ -11,6 +11,6 @@ defmodule ZenSoft.Katas.MakeX do
   end
 
   def make_x_str(size) do
-    Enum.map make_x(size), fn(row) -> to_string row end
+    Enum.map make_x(size), &(to_string &1)
   end
 end
