@@ -7,13 +7,12 @@ defmodule ZenSoft.Katas.MakeX do
   def make_x(size) do
     for r <- 1..size do
       line = []
-      for c <- 1..size do
-        line ++ [value(size, r, c)]
-      end |> Enum.concat 
+      line = for c <- 1..size, do: line ++ [value(size, r, c)]
+      Enum.concat line
     end
   end
 
   def make_x_str(size) do
-    Enum.map(make_x(size), fn(row) -> to_string row end)
+    Enum.map make_x(size), fn(row) -> to_string row end
   end
 end
