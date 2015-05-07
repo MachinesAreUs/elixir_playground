@@ -32,10 +32,12 @@ defmodule ZenSoft.KatasTest do
                          ['x',' ',' ',' ','x']]
   end
 
-  test "size 3 as strings" do
-    assert make_x_str(3) == ["x x",
-                             " x ",
-                             "x x"]
+  test "size 5 as strings" do
+    assert make_x_str(5) == ["x   x",
+    						 " x x ",
+                             "  x  ",
+                             " x x ",
+                             "x   x"]
   end
 
 end
