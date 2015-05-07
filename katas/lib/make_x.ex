@@ -6,7 +6,7 @@ defmodule ZenSoft.Katas.MakeX do
 
   def make_x(size) do
     for r <- 1..size do
-      line = for c <- 1..size, do: value(size, r, c)
+      for c <- 1..size, do: value(size, r, c)
     end
   end
 
