@@ -5,7 +5,7 @@ defmodule ZenSoft.Katas.MakeX do
   end
 
   def make_x(size) do
-    mtx = for r <- 1..size do
+    for r <- 1..size do
       line = []
       line = for c <- 1..size do
         line ++ [value(size, r, c)]
