@@ -1,7 +1,5 @@
 defmodule ZenSoft.Katas.MakeX do
 
-  def is_diagonal(size, r, c), do: r == c or r == (size - c + 1) 
-
   def value(size, r, c) do
     if r == c or r == (size - c + 1) do 'x' else ' ' end
   end
