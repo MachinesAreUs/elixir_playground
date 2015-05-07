@@ -25,6 +25,6 @@ defmodule ZenSoft.Katas.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [{:shouldi, only: :test}]
   end
 end
