@@ -34,7 +34,7 @@ defmodule ZenSoft.KatasTest do
 
   test "size 5 as strings" do
     assert make_x_str(5) == ["x   x",
-    						             " x x ",
+                             " x x ",
                              "  x  ",
                              " x x ",
                              "x   x"]
