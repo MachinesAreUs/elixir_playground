@@ -9,8 +9,7 @@ defmodule ZenSoft.Katas.MakeX do
       line = []
       line = for c <- 1..size do
         line ++ [value(size, r, c)]
-      end
-      line |> Enum.concat 
+      end |> Enum.concat 
     end
   end
 
