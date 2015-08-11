@@ -5,6 +5,7 @@ defmodule Kv.Mixfile do
     [app: :kv,
      version: "0.0.1",
      elixir: "~> 1.0",
+     test_coverage: [tool: ExCoveralls],
      deps: deps]
   end
 
@@ -25,7 +26,9 @@ defmodule Kv.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:colorful, git: "git@github.com:Joe-noh/colorful.git"}]
+    [{:colorful, git: "git@github.com:Joe-noh/colorful.git"},
+     {:excoveralls, "~> 0.3", only: :test}
+    ]
   end
 
 end
