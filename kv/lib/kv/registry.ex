@@ -54,7 +54,8 @@ defmodule KV.Registry do
     {:noreply, {names, refs}}
   end
 
-  def handle_info(_msg, state) do
+  def handle_info(msg, state) do
+    IO.puts Colorful.string("received message #{inspect msg}", [:blue])
     {:noreply, state}
   end
 
