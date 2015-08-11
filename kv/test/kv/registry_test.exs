@@ -44,7 +44,7 @@ defmodule KV.RegistryTest do
     assert_receive {:ok, "some message"} 
   end
 
-  # Even management
+  # Event management
 
   test "sends events on create and crash", %{registry: registry} do
     KV.Registry.create registry, "animals"
