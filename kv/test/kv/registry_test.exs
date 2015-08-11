@@ -1,8 +1,20 @@
 defmodule KV.RegistryTest do
   use ExUnit.Case, async: true
 
+  defmodule Forwarder do
+    use GenEvent
+
+    def handle_event(event, parent) do
+      send parent, event
+      {:ok, parent}
+    end
+  end
+
   setup do
-    {:ok, registry} = KV.Registry.start_link
+    {:ok, manager} = GenEvent.start_link
+    {:ok, registry} = KV.Registry.start_link manager
+
+    GenEvent.add_mon_handler manager, Forwarder, self()
     {:ok, registry: registry}
   end
 
@@ -25,6 +37,22 @@ defmodule KV.RegistryTest do
     {:ok, bucket} = KV.Registry.lookup(registry, "foo")
     Agent.stop(bucket)
     assert KV.Registry.lookup(registry, "foo") == :error
+  end
+
+  test "any other messsage is handled by 'handle_info", %{registry: registry} do
+    Process.send registry, {self(), "some message"}, []
+    assert_receive {:ok, "some message"} 
+  end
+
+  # Even management
+
+  test "sends events on create and crash", %{registry: registry} do
+    KV.Registry.create registry, "animals"
+    {:ok, bucket} = KV.Registry.lookup registry, "animals"
+    assert_receive {:create, "animals", ^bucket}
+
+    Agent.stop bucket
+    assert_receive {:exit, "animals", ^bucket}
   end
 
 end
