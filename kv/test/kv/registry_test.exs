@@ -6,6 +6,10 @@ defmodule KV.RegistryTest do
     {:ok, registry: registry}
   end
 
+  test "stops a registry", %{registry: registry} do
+    assert KV.Registry.stop(registry) == :ok
+  end
+
   test "spawns buckets", %{registry: registry} do
     assert KV.Registry.lookup(registry, "foo") == :error
 
@@ -22,5 +26,6 @@ defmodule KV.RegistryTest do
     Agent.stop(bucket)
     assert KV.Registry.lookup(registry, "foo") == :error
   end
+
 
 end
