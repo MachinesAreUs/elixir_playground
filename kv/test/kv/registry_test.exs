@@ -27,5 +27,4 @@ defmodule KV.RegistryTest do
     assert KV.Registry.lookup(registry, "foo") == :error
   end
 
-
 end
