@@ -22,7 +22,9 @@ defmodule KV.Registry do
   # Server Callbacks
 
   def init(:ok) do
-    {:ok, Map.new} 
+    names = Map.new
+    refs  = Map.new
+    {:ok, {names, refs}} 
   end
 
   def handle_call(:stop, _from, names) do
@@ -30,17 +32,30 @@ defmodule KV.Registry do
     {:stop, :normal, :ok, names}
   end
 
-  def handle_call({:lookup, name}, _from, names) do
-    {:reply, Map.fetch(names, name), names}
+  def handle_call({:lookup, name}, _from, {names, _} = state) do
+    {:reply, Map.fetch(names, name), state}
   end
 
-  def handle_cast({:create, name}, names) do
+  def handle_cast({:create, name}, {names, refs}) do
     if Map.has_key?(names, name) do
-      {:noreply, names}
+      {:noreply, {names, refs}}
     else
       {:ok, bucket} = KV.Bucket.start_link()
-      {:noreply, Map.put(names, name, bucket)}
+      ref = Process.monitor bucket
+      refs = Map.put refs, ref, name
+      names = Map.put names, name, bucket
+      {:noreply, {names, refs}}
     end
+  end
+
+  def handle_info({:DOWN, ref, :process, _pid, _reason}, {names, refs}) do
+    {name, refs} = Map.pop(refs, ref)
+    names = Map.delete(names, name)
+    {:noreply, {names, refs}}
+  end
+
+  def handle_info(_msg, state) do
+    {:noreply, state}
   end
 
 end
