@@ -10,8 +10,7 @@ defmodule GenEventTest do
         Process.send(this, msg, [])
       end
     end
-    GenEvent.notify manager, {:hello}
-    assert_receive {:hello}, 200
+    GenEvent.notify manager, {:ok, "message"}
+    assert_receive {:ok, "message"} #, 200
   end
-
 end
