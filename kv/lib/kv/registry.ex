@@ -3,8 +3,8 @@ defmodule KV.Registry do
 
   # Client API
 
-  def start_link(event_manager, opts \\ []) do
-    GenServer.start_link __MODULE__, event_manager, opts
+  def start_link(event_manager, bucket_supervisor, opts \\ []) do
+    GenServer.start_link __MODULE__, {event_manager, bucket_supervisor}, opts
   end
 
   def stop(server) do
@@ -21,10 +21,10 @@ defmodule KV.Registry do
 
   # Server Callbacks
 
-  def init(events) do
+  def init({events, bucket_supervisor}) do
     names = Map.new
     refs  = Map.new
-    {:ok, %{names: names, refs: refs, events: events}} 
+    {:ok, %{names: names, refs: refs, events: events, buckets: bucket_supervisor}} 
   end
 
   def handle_call(:stop, _from, names) do
@@ -40,7 +40,8 @@ defmodule KV.Registry do
     if Map.has_key?(state.names, name) do
       {:noreply, state}
     else
-      {:ok, bucket} = KV.Bucket.start_link()
+      #{:ok, bucket} = KV.Bucket.start_link()
+      {:ok, bucket} = KV.Bucket.Supervisor.start_bucket state.buckets
       ref = Process.monitor bucket
       refs = Map.put state.refs, ref, name
       names = Map.put state.names, name, bucket

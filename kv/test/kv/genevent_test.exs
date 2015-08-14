@@ -1,6 +1,7 @@
 defmodule GenEventTest do
   use ExUnit.Case, async: true
 
+  @tag :pending
   test "consume events as streams" do
     {:ok, manager} = GenEvent.start_link
     this = self()
