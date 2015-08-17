@@ -12,10 +12,10 @@ defmodule KV.Supervisor do
 
   def init(:ok) do
     children = [
-      worker(GenEvent,             [[name: @manager_name]]),
-      worker(KV.Bucket.Supervisor, [[name: @bucket_supervisor_name]]),
-      worker(KV.Registry,          [@manager_name, @bucket_supervisor_name, [name: @registry_name]]),
-      worker(KV.LogForwarder,      [[name: @logger_name]])
+      worker(GenEvent,                 [[name: @manager_name]]),
+      supervisor(KV.Bucket.Supervisor, [[name: @bucket_supervisor_name]]),
+      worker(KV.Registry,              [@manager_name, @bucket_supervisor_name, [name: @registry_name]]),
+      worker(KV.LogForwarder,          [[name: @logger_name]])
     ]
 
     supervise children, strategy: :one_for_one
