@@ -8,7 +8,13 @@ env:
   - ELIXIR_ERL_OPTIONS=""
   - ELIXIR_ERL_OPTIONS="+T 9"
 script:
+  - cd apps/katas
   - mix deps.get
+  - cd ../kv
+  - mix deps.get
+  - cd ../elixir_nif_test
+  - mix deps.get
+  - cd ../..
   - mix test
 after_script:
   - mix deps.get --only docs
