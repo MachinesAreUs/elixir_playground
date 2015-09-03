@@ -30,7 +30,7 @@ defmodule Kv.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:colorful, git: "git@github.com:Joe-noh/colorful.git"},
+    [#{:colorful, git: "git@github.com:Joe-noh/colorful.git"},
      {:excoveralls, "~> 0.3", only: :test}
     ]
   end

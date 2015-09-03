@@ -28,7 +28,8 @@ defmodule KV.Registry do
   end
 
   def handle_call(:stop, _from, names) do
-    IO.puts Colorful.string("terminating server", [:blue])
+    #IO.puts Colorful.string("terminating server", [:blue])
+    IO.puts "terminating server"
     {:stop, :normal, :ok, names}
   end
 
