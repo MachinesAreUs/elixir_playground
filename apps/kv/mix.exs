@@ -1,10 +1,13 @@
-defmodule ZenSoft.Katas.Mixfile do
+defmodule Kv.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :katas,
+    [app: :kv,
      version: "0.0.1",
+     deps_path: "../../deps",
+     lockfile: "../../mix.lock",
      elixir: "~> 1.0",
+     test_coverage: [tool: ExCoveralls],
      deps: deps]
   end
 
@@ -12,7 +15,9 @@ defmodule ZenSoft.Katas.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger],
+     mod: {KV, []}
+    ]
   end
 
   # Dependencies can be Hex packages:
@@ -25,6 +30,9 @@ defmodule ZenSoft.Katas.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:shouldi, only: :test}]
+    [{:colorful, git: "git@github.com:Joe-noh/colorful.git"},
+     {:excoveralls, "~> 0.3", only: :test}
+    ]
   end
+
 end

@@ -1,11 +1,14 @@
-defmodule Kv.Mixfile do
+defmodule ElixirNifTest.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :kv,
+    [app: :elixir_nif_test,
      version: "0.0.1",
+     deps_path: "../../deps",
+     lockfile: "../../mix.lock",
      elixir: "~> 1.0",
-     test_coverage: [tool: ExCoveralls],
+     build_embedded: Mix.env == :prod,
+     start_permanent: Mix.env == :prod,
      deps: deps]
   end
 
@@ -13,9 +16,7 @@ defmodule Kv.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger],
-     mod: {KV, []}
-    ]
+    [applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
@@ -28,9 +29,6 @@ defmodule Kv.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:colorful, git: "git@github.com:Joe-noh/colorful.git"},
-     {:excoveralls, "~> 0.3", only: :test}
-    ]
+    []
   end
-
 end
