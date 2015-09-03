@@ -1,4 +1,4 @@
 Katas
 =============
 
-Solutions to the posed in the [Soft Craft Slack Channel](https://softcraft.slack.com/home).
+Solutions to the problems posed in the [Soft Craft Slack Channel](https://softcraft.slack.com/home).
