@@ -7,8 +7,8 @@ defmodule OtpBasics.Supervisor do
 
   def init(:ok) do
     children = [
-      # Define workers and child supervisors to be supervised
-      # worker(OtpBasics.Worker, [arg1, arg2, arg3])
+      supervisor(Task.Supervisor, [[name: EchoServer.Task.Supervisor]]),
+      worker(Task, [EchoServer, :accept, [3030]])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
