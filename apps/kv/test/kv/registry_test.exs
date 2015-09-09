@@ -37,6 +37,7 @@ defmodule KV.RegistryTest do
     KV.Registry.create(registry, "foo")
     {:ok, bucket} = KV.Registry.lookup(registry, "foo")
     Agent.stop(bucket)
+    :timer.sleep(100)
     assert KV.Registry.lookup(registry, "foo") == :error
   end
 
