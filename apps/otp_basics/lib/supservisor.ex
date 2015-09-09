@@ -8,7 +8,8 @@ defmodule OtpBasics.Supervisor do
   def init(:ok) do
     children = [
       supervisor(Task.Supervisor, [[name: EchoServer.Task.Supervisor]]),
-      worker(Task, [EchoServer, :accept, [3030]])
+      worker(Task, [EchoServer, :accept, [3030]], id: EchoServerTask),
+      worker(Task, [CommandServer, :accept, [4040]], id: CommandServerTask)
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
