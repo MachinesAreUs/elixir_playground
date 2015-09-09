@@ -29,8 +29,13 @@ defmodule CommandServer do
         {:error, _} = err ->
           err
       end
-    write_line(socket, msg)
-    serve(socket)
+    case msg do
+      {:error, :closed} ->
+        msg
+      _ -> 
+        write_line(socket, msg)
+        serve(socket)
+    end
   end
 
   defp read_line(socket) do
